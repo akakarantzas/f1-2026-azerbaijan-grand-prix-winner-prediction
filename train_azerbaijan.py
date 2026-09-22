@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 import warnings
 from pathlib import Path
 
@@ -19,9 +20,10 @@ warnings.filterwarnings("ignore")
 
 ROOT = Path(__file__).resolve().parent
 CACHE_DIR = ROOT / "cache"
-MODEL_PATH = ROOT / "azerbaijan_model.pkl"
-PREDICTIONS_PATH = ROOT / "azerbaijan_predictions.json"
-METADATA_PATH = ROOT / "azerbaijan_metadata.json"
+OUTPUT_DIR = Path(os.environ.get("OUTPUT_DIR", ROOT))
+MODEL_PATH = OUTPUT_DIR / "azerbaijan_model.pkl"
+PREDICTIONS_PATH = OUTPUT_DIR / "azerbaijan_predictions.json"
+METADATA_PATH = OUTPUT_DIR / "azerbaijan_metadata.json"
 GRID_OVERRIDE_PATH = ROOT / "qualifying_grid.json"
 POSTPROCESS_CANDIDATES = [
     {"model_weight": model_weight, "floor": floor}
@@ -524,6 +526,7 @@ def run_walk_forward_backtest(
 
 
 def main() -> None:
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     data = engineer_features(load_results())
     grid_positions, grid_metadata = load_grid_positions()
     tuned_postprocess = tune_walk_forward_postprocess(data)

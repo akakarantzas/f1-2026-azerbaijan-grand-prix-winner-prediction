@@ -22,6 +22,22 @@ python train_azerbaijan.py
 
 FastF1 downloads race data into the local `cache/` directory.
 
+## Run with Docker
+
+Build and run the reproducible training environment with Docker Compose:
+
+```bash
+docker compose up --build
+```
+
+The container uses Python 3.12, persists FastF1 downloads in `cache/`, and writes the generated model, predictions, and metadata to `artifacts/`.
+
+To rebuild the image and retrain from a clean container:
+
+```bash
+docker compose run --rm --build train
+```
+
 ## Qualifying Grid
 
 Before qualifying, the script uses its projected grid. After qualifying, copy `qualifying_grid.example.json` to `qualifying_grid.json`, update the positions, and rerun the script.
