@@ -9,6 +9,7 @@
     "DriverCode",
     "TeamName",
     "AvgPoints5",
+    "AvgGrid3",
     "AvgGrid5",
     "AvgFinish5",
     "WinRate10",
@@ -21,15 +22,15 @@
     "method": "walk_forward_backtest",
     "races_tested": 14,
     "top1_accuracy": 0.5,
-    "top3_accuracy": 0.7857,
+    "top3_accuracy": 0.8571,
     "top5_accuracy": 1.0,
-    "mean_winner_rank": 2.14,
-    "log_loss": 0.111,
-    "brier_score": 0.032
+    "mean_winner_rank": 2.0,
+    "log_loss": 0.1118,
+    "brier_score": 0.0323
   },
   "prediction_postprocess": {
-    "model_weight": 0.65,
-    "form_prior_weight": 0.35,
+    "model_weight": 0.6,
+    "form_prior_weight": 0.4,
     "floor_before_normalization": 0.0005,
     "selection": {
       "method": "walk_forward_grid_search",
@@ -38,12 +39,12 @@
       "tuning_period": "through 2025",
       "tuning_summary": {
         "races_tested": 19,
-        "top1_accuracy": 0.4737,
+        "top1_accuracy": 0.4211,
         "top3_accuracy": 0.9474,
         "top5_accuracy": 1.0,
         "mean_winner_rank": 1.95,
-        "log_loss": 0.1283,
-        "brier_score": 0.0377
+        "log_loss": 0.1273,
+        "brier_score": 0.0374
       }
     }
   },
@@ -58,95 +59,95 @@
         "race": "2026 Australia",
         "winner": "RUS",
         "winner_rank": 1,
-        "winner_probability": 0.2425
+        "winner_probability": 0.2474
       },
       {
         "race": "2026 China",
         "winner": "ANT",
-        "winner_rank": 4,
-        "winner_probability": 0.0991
+        "winner_rank": 2,
+        "winner_probability": 0.1082
       },
       {
         "race": "2026 Japan",
         "winner": "ANT",
         "winner_rank": 1,
-        "winner_probability": 0.2785
+        "winner_probability": 0.2493
       },
       {
         "race": "2026 Miami",
         "winner": "ANT",
         "winner_rank": 1,
-        "winner_probability": 0.3936
+        "winner_probability": 0.3794
       },
       {
         "race": "2026 Canada",
         "winner": "ANT",
         "winner_rank": 2,
-        "winner_probability": 0.2164
+        "winner_probability": 0.209
       },
       {
         "race": "2026 Monaco",
         "winner": "ANT",
         "winner_rank": 1,
-        "winner_probability": 0.4058
+        "winner_probability": 0.3952
       },
       {
         "race": "2026 Barcelona-Catalunya",
         "winner": "HAM",
         "winner_rank": 3,
-        "winner_probability": 0.0855
+        "winner_probability": 0.12
       },
       {
         "race": "2026 Austria",
         "winner": "RUS",
         "winner_rank": 3,
-        "winner_probability": 0.188
+        "winner_probability": 0.1628
       },
       {
         "race": "2026 British",
         "winner": "LEC",
         "winner_rank": 5,
-        "winner_probability": 0.0513
+        "winner_probability": 0.0507
       },
       {
         "race": "2026 Belgium",
         "winner": "ANT",
         "winner_rank": 1,
-        "winner_probability": 0.2925
+        "winner_probability": 0.2674
       },
       {
         "race": "2026 Hungary",
         "winner": "NOR",
         "winner_rank": 1,
-        "winner_probability": 0.3049
+        "winner_probability": 0.3055
       },
       {
         "race": "2026 Dutch",
         "winner": "NOR",
         "winner_rank": 1,
-        "winner_probability": 0.3837
+        "winner_probability": 0.3348
       },
       {
         "race": "2026 Italian",
         "winner": "ANT",
         "winner_rank": 4,
-        "winner_probability": 0.0953
+        "winner_probability": 0.0856
       },
       {
         "race": "2026 Spain",
         "winner": "ANT",
         "winner_rank": 2,
-        "winner_probability": 0.2483
+        "winner_probability": 0.2732
       }
     ],
     "summary": {
       "races_tested": 14,
       "top1_accuracy": 0.5,
-      "top3_accuracy": 0.7857,
+      "top3_accuracy": 0.8571,
       "top5_accuracy": 1.0,
-      "mean_winner_rank": 2.14,
-      "log_loss": 0.111,
-      "brier_score": 0.032
+      "mean_winner_rank": 2.0,
+      "log_loss": 0.1118,
+      "brier_score": 0.0323
     }
   }
 }

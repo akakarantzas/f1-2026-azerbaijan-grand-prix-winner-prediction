@@ -86,6 +86,7 @@ FEATURES = [
     "DriverCode",
     "TeamName",
     "AvgPoints5",
+    "AvgGrid3",
     "AvgGrid5",
     "AvgFinish5",
     "WinRate10",
@@ -221,6 +222,9 @@ def engineer_features(data: pd.DataFrame) -> pd.DataFrame:
     data["AvgGrid5"] = grouped_driver["GridPosition"].transform(
         lambda x: x.shift(1).rolling(5, min_periods=1).mean()
     )
+    data["AvgGrid3"] = grouped_driver["GridPosition"].transform(
+        lambda x: x.shift(1).rolling(3, min_periods=1).mean()
+    )
     data["AvgFinish5"] = grouped_driver["Position"].transform(
         lambda x: x.shift(1).rolling(5, min_periods=1).mean()
     )
@@ -257,6 +261,7 @@ def engineer_features(data: pd.DataFrame) -> pd.DataFrame:
 
     data["AvgPoints5"] = data["AvgPoints5"].fillna(0)
     data["AvgGrid5"] = data["AvgGrid5"].fillna(data["GridPosition"])
+    data["AvgGrid3"] = data["AvgGrid3"].fillna(data["GridPosition"])
     data["AvgFinish5"] = data["AvgFinish5"].fillna(14)
     data["WinRate10"] = data["WinRate10"].fillna(0)
     data["TeamAvgPoints5"] = data["TeamAvgPoints5"].fillna(0)
@@ -313,6 +318,7 @@ def build_prediction_rows(data: pd.DataFrame, grid_positions: dict[str, int]) ->
             .sort_values("RaceOrder")
         )
         recent_five = history.tail(5)
+        recent_three = history.tail(3)
         recent_ten = history.tail(10)
         azerbaijan_history = history[history["GrandPrix"].eq("Azerbaijan")]
         rows.append(
@@ -323,6 +329,7 @@ def build_prediction_rows(data: pd.DataFrame, grid_positions: dict[str, int]) ->
                 "GridPosition": grid_positions[code],
                 "DriverCode": code,
                 "AvgPoints5": float(recent_five["Points"].mean()) if not history.empty else 0.0,
+                "AvgGrid3": float(recent_three["GridPosition"].mean()) if not history.empty else grid_positions[code],
                 "AvgGrid5": float(recent_five["GridPosition"].mean()) if not history.empty else grid_positions[code],
                 "AvgFinish5": float(recent_five["Position"].mean()) if not history.empty else 14.0,
                 "WinRate10": float(recent_ten["Winner"].mean()) if not history.empty else 0.0,
