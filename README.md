@@ -59,3 +59,7 @@ Before qualifying, the script uses its projected grid. After qualifying, copy `q
 ## Production Integration
 
 `chicane-ai` can consume the exported prediction artifacts. Training code and FastF1 cache data remain in this repository.
+
+## License
+
+This project is available under the [MIT License](LICENSE).
