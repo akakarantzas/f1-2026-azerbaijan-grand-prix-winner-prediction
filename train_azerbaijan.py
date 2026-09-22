@@ -211,7 +211,6 @@ def load_results() -> pd.DataFrame:
 def engineer_features(data: pd.DataFrame) -> pd.DataFrame:
     data = data.sort_values(["RaceOrder", "Position"])
     grouped_driver = data.groupby("Abbreviation", group_keys=False)
-    grouped_team = data.groupby("TeamName", group_keys=False)
 
     data["AvgPoints5"] = grouped_driver["Points"].transform(
         lambda x: x.shift(1).rolling(5, min_periods=1).mean()
@@ -225,8 +224,18 @@ def engineer_features(data: pd.DataFrame) -> pd.DataFrame:
     data["WinRate10"] = grouped_driver["Winner"].transform(
         lambda x: x.shift(1).rolling(10, min_periods=1).mean()
     )
-    data["TeamAvgPoints5"] = grouped_team["Points"].transform(
+    team_race = (
+        data.groupby(["RaceOrder", "TeamName"], as_index=False)["Points"]
+        .sum()
+        .sort_values("RaceOrder")
+    )
+    team_race["TeamAvgPoints5"] = team_race.groupby("TeamName")["Points"].transform(
         lambda x: x.shift(1).rolling(5, min_periods=1).mean()
+    )
+    data = data.merge(
+        team_race[["RaceOrder", "TeamName", "TeamAvgPoints5"]],
+        on=["RaceOrder", "TeamName"],
+        how="left",
     )
 
     data["AzerbaijanExperience"] = data.groupby("Abbreviation")["GrandPrix"].transform(
@@ -290,10 +299,15 @@ def build_prediction_rows(data: pd.DataFrame, grid_positions: dict[str, int]) ->
 
     for code, driver, team in DRIVER_ROSTER_2026:
         history = data[data["Abbreviation"].eq(code)].sort_values("RaceOrder")
+        team_history = (
+            data[data["TeamName"].eq(team)]
+            .groupby("RaceOrder", as_index=False)["Points"]
+            .sum()
+            .sort_values("RaceOrder")
+        )
         recent_five = history.tail(5)
         recent_ten = history.tail(10)
         azerbaijan_history = history[history["GrandPrix"].eq("Azerbaijan")]
-        latest = history.iloc[-1] if not history.empty else None
         rows.append(
             {
                 "Abbreviation": code,
@@ -305,7 +319,7 @@ def build_prediction_rows(data: pd.DataFrame, grid_positions: dict[str, int]) ->
                 "AvgGrid5": float(recent_five["GridPosition"].mean()) if not history.empty else grid_positions[code],
                 "AvgFinish5": float(recent_five["Position"].mean()) if not history.empty else 14.0,
                 "WinRate10": float(recent_ten["Winner"].mean()) if not history.empty else 0.0,
-                "TeamAvgPoints5": float(latest["TeamAvgPoints5"]) if latest is not None else 0.0,
+                "TeamAvgPoints5": float(team_history.tail(5)["Points"].mean()) if not team_history.empty else 0.0,
                 "AzerbaijanExperience": float(len(azerbaijan_history)),
                 "AzerbaijanWinRate": float(azerbaijan_history["Winner"].mean()) if not azerbaijan_history.empty else 0.0,
                 "IsStreetCircuit": 1,
