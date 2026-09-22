@@ -110,8 +110,6 @@ RACES_TO_LOAD = [
     (2026, "Australia"),
     (2026, "China"),
     (2026, "Japan"),
-    (2026, "Bahrain"),
-    (2026, "Saudi Arabia"),
     (2026, "Miami"),
     (2026, "Canada"),
     (2026, "Monaco"),
