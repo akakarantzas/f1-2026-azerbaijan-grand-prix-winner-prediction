@@ -648,6 +648,11 @@ def main() -> None:
             "start": f"{int(earliest_race['Year'])} {earliest_race['GrandPrix']}",
             "end": f"{int(latest_race['Year'])} {latest_race['GrandPrix']}",
         },
+        "driver_roster": {
+            "status": "confirmed",
+            "confirmed_at": "2026-09-22",
+            "source": "https://www.formula1.com/en/latest/article/hadjar-to-make-racing-return-with-red-bull-at-azerbaijan-gp.1ddPnUSDEze0V9MCiQ9d2U",
+        },
         "training_samples": int(len(data)),
         "training_races_loaded": int(data[["Year", "GrandPrix"]].drop_duplicates().shape[0]),
         "features": FEATURES,

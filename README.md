@@ -2,6 +2,8 @@
 
 Standalone machine learning project for predicting the winner of the 2026 Azerbaijan Grand Prix at Baku City Circuit on September 26, 2026.
 
+The driver roster reflects the confirmed Azerbaijan lineup announced on September 22: Isack Hadjar returns to Red Bull, Liam Lawson returns to Racing Bulls, and Yuki Tsunoda resumes reserve duties.
+
 This repository owns the data loading, feature engineering, training, validation, model artifact, and prediction export. The production app consumes the exported JSON rather than training the model at request time.
 
 ## Approach
