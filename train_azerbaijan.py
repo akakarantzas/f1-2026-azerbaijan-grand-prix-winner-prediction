@@ -9,14 +9,17 @@ import fastf1
 import joblib
 import numpy as np
 import pandas as pd
+from sklearn import set_config
 from sklearn.calibration import CalibratedClassifierCV
 from sklearn.ensemble import HistGradientBoostingClassifier
 from sklearn.metrics import brier_score_loss, log_loss
+from sklearn.model_selection import StratifiedGroupKFold
 from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OrdinalEncoder
 
 warnings.filterwarnings("ignore")
+set_config(enable_metadata_routing=True)
 
 ROOT = Path(__file__).resolve().parent
 CACHE_DIR = ROOT / "cache"
@@ -268,7 +271,11 @@ def build_model() -> Pipeline:
         l2_regularization=0.1,
         random_state=42,
     )
-    calibrated = CalibratedClassifierCV(base, method="isotonic", cv=3)
+    calibrated = CalibratedClassifierCV(
+        base,
+        method="sigmoid",
+        cv=StratifiedGroupKFold(n_splits=3),
+    )
     return Pipeline(
         [
             (
@@ -424,7 +431,7 @@ def tune_walk_forward_postprocess(data: pd.DataFrame, min_training_races: int = 
             continue
 
         model = build_model()
-        model.fit(train[FEATURES], train["Winner"])
+        model.fit(train[FEATURES], train["Winner"], groups=train["RaceOrder"])
         model_probs = model.predict_proba(target[FEATURES])[:, 1]
         form_prior = calculate_form_prior(target)
 
@@ -505,7 +512,7 @@ def run_walk_forward_backtest(
             continue
 
         model = build_model()
-        model.fit(train[FEATURES], train["Winner"])
+        model.fit(train[FEATURES], train["Winner"], groups=train["RaceOrder"])
         model_probs = model.predict_proba(target[FEATURES])[:, 1]
         target["probability"] = apply_probability_postprocess(
             target,
@@ -552,7 +559,7 @@ def main() -> None:
     model = build_model()
     x = data[FEATURES]
 
-    model.fit(x, data["Winner"])
+    model.fit(x, data["Winner"], groups=data["RaceOrder"])
     pred = build_prediction_rows(data, grid_positions)
     model_probs = model.predict_proba(pred[FEATURES])[:, 1]
     pred["probability"] = apply_probability_postprocess(pred, model_probs, model_weight, floor)
