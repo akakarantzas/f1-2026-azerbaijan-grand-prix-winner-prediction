@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import os
 import warnings
+from datetime import datetime, timezone
 from pathlib import Path
 
 import fastf1
@@ -633,11 +634,22 @@ def main() -> None:
         }
         for _, row in pred.sort_values("probability", ascending=False).iterrows()
     ]
+    latest_race = data.sort_values("RaceOrder").iloc[-1]
+    earliest_race = data.sort_values("RaceOrder").iloc[0]
 
     metadata = {
         "race": "Azerbaijan GP",
         "circuit": "Baku City Circuit",
-        "model_version": "azerbaijan-hgb-calibrated-1.0",
+        "model_version": "azerbaijan-hgb-calibrated-1.1",
+        "generated_at": datetime.now(timezone.utc).isoformat(),
+        "data_cutoff": {
+            "year": int(latest_race["Year"]),
+            "race": str(latest_race["GrandPrix"]),
+        },
+        "training_period": {
+            "start": f"{int(earliest_race['Year'])} {earliest_race['GrandPrix']}",
+            "end": f"{int(latest_race['Year'])} {latest_race['GrandPrix']}",
+        },
         "training_samples": int(len(data)),
         "training_races_loaded": int(data[["Year", "GrandPrix"]].drop_duplicates().shape[0]),
         "features": FEATURES,

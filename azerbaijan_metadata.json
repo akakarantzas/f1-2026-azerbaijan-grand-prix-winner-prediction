@@ -1,7 +1,16 @@
 {
   "race": "Azerbaijan GP",
   "circuit": "Baku City Circuit",
-  "model_version": "azerbaijan-hgb-calibrated-1.0",
+  "model_version": "azerbaijan-hgb-calibrated-1.1",
+  "generated_at": "2026-09-22T23:12:42.987389+00:00",
+  "data_cutoff": {
+    "year": 2026,
+    "race": "Spain"
+  },
+  "training_period": {
+    "start": "2022 Azerbaijan",
+    "end": "2026 Spain"
+  },
   "training_samples": 1726,
   "training_races_loaded": 85,
   "features": [
