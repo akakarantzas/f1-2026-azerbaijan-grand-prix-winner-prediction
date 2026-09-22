@@ -19,22 +19,32 @@
   ],
   "validation": {
     "method": "walk_forward_backtest",
-    "races_tested": 33,
-    "top1_accuracy": 0.4848,
-    "top3_accuracy": 0.9091,
+    "races_tested": 14,
+    "top1_accuracy": 0.5,
+    "top3_accuracy": 0.7857,
     "top5_accuracy": 1.0,
-    "mean_winner_rank": 2.0,
-    "log_loss": 0.1211,
-    "brier_score": 0.0352
+    "mean_winner_rank": 2.14,
+    "log_loss": 0.111,
+    "brier_score": 0.032
   },
   "prediction_postprocess": {
-    "model_weight": 0.6,
-    "form_prior_weight": 0.4,
+    "model_weight": 0.65,
+    "form_prior_weight": 0.35,
     "floor_before_normalization": 0.0005,
     "selection": {
       "method": "walk_forward_grid_search",
       "candidates_tested": 21,
-      "selection_metric": "top1_accuracy, then mean_winner_rank, log_loss, brier_score"
+      "selection_metric": "top1_accuracy, then mean_winner_rank, log_loss, brier_score",
+      "tuning_period": "through 2025",
+      "tuning_summary": {
+        "races_tested": 19,
+        "top1_accuracy": 0.4737,
+        "top3_accuracy": 0.9474,
+        "top5_accuracy": 1.0,
+        "mean_winner_rank": 1.95,
+        "log_loss": 0.1283,
+        "brier_score": 0.0377
+      }
     }
   },
   "prediction_input": {
@@ -45,212 +55,98 @@
   "backtest": {
     "races": [
       {
-        "race": "2025 Miami",
-        "winner": "PIA",
-        "winner_rank": 1,
-        "winner_probability": 0.2304
-      },
-      {
-        "race": "2025 Emilia Romagna",
-        "winner": "VER",
-        "winner_rank": 3,
-        "winner_probability": 0.1291
-      },
-      {
-        "race": "2025 Monaco",
-        "winner": "NOR",
-        "winner_rank": 3,
-        "winner_probability": 0.1333
-      },
-      {
-        "race": "2025 Spain",
-        "winner": "PIA",
-        "winner_rank": 1,
-        "winner_probability": 0.251
-      },
-      {
-        "race": "2025 Canada",
-        "winner": "RUS",
-        "winner_rank": 4,
-        "winner_probability": 0.0834
-      },
-      {
-        "race": "2025 Austria",
-        "winner": "NOR",
-        "winner_rank": 2,
-        "winner_probability": 0.1886
-      },
-      {
-        "race": "2025 British",
-        "winner": "NOR",
-        "winner_rank": 3,
-        "winner_probability": 0.163
-      },
-      {
-        "race": "2025 Belgium",
-        "winner": "PIA",
-        "winner_rank": 2,
-        "winner_probability": 0.2368
-      },
-      {
-        "race": "2025 Hungary",
-        "winner": "NOR",
-        "winner_rank": 1,
-        "winner_probability": 0.2603
-      },
-      {
-        "race": "2025 Dutch",
-        "winner": "PIA",
-        "winner_rank": 1,
-        "winner_probability": 0.2486
-      },
-      {
-        "race": "2025 Italian",
-        "winner": "VER",
-        "winner_rank": 3,
-        "winner_probability": 0.1584
-      },
-      {
-        "race": "2025 Azerbaijan",
-        "winner": "VER",
-        "winner_rank": 1,
-        "winner_probability": 0.1587
-      },
-      {
-        "race": "2025 Singapore",
-        "winner": "RUS",
-        "winner_rank": 3,
-        "winner_probability": 0.1141
-      },
-      {
-        "race": "2025 United States",
-        "winner": "VER",
-        "winner_rank": 1,
-        "winner_probability": 0.2254
-      },
-      {
-        "race": "2025 Mexico",
-        "winner": "NOR",
-        "winner_rank": 1,
-        "winner_probability": 0.2141
-      },
-      {
-        "race": "2025 Sao Paulo",
-        "winner": "NOR",
-        "winner_rank": 1,
-        "winner_probability": 0.2003
-      },
-      {
-        "race": "2025 Las Vegas",
-        "winner": "VER",
-        "winner_rank": 2,
-        "winner_probability": 0.1779
-      },
-      {
-        "race": "2025 Qatar",
-        "winner": "VER",
-        "winner_rank": 3,
-        "winner_probability": 0.167
-      },
-      {
-        "race": "2025 Abu Dhabi",
-        "winner": "VER",
-        "winner_rank": 1,
-        "winner_probability": 0.2945
-      },
-      {
         "race": "2026 Australia",
         "winner": "RUS",
         "winner_rank": 1,
-        "winner_probability": 0.2325
+        "winner_probability": 0.2425
       },
       {
         "race": "2026 China",
         "winner": "ANT",
-        "winner_rank": 3,
-        "winner_probability": 0.102
+        "winner_rank": 4,
+        "winner_probability": 0.0991
       },
       {
         "race": "2026 Japan",
         "winner": "ANT",
         "winner_rank": 1,
-        "winner_probability": 0.2684
+        "winner_probability": 0.2785
       },
       {
         "race": "2026 Miami",
         "winner": "ANT",
         "winner_rank": 1,
-        "winner_probability": 0.3772
+        "winner_probability": 0.3936
       },
       {
         "race": "2026 Canada",
         "winner": "ANT",
         "winner_rank": 2,
-        "winner_probability": 0.2123
+        "winner_probability": 0.2164
       },
       {
         "race": "2026 Monaco",
         "winner": "ANT",
         "winner_rank": 1,
-        "winner_probability": 0.39
+        "winner_probability": 0.4058
       },
       {
         "race": "2026 Barcelona-Catalunya",
         "winner": "HAM",
         "winner_rank": 3,
-        "winner_probability": 0.087
+        "winner_probability": 0.0855
       },
       {
         "race": "2026 Austria",
         "winner": "RUS",
         "winner_rank": 3,
-        "winner_probability": 0.184
+        "winner_probability": 0.188
       },
       {
         "race": "2026 British",
         "winner": "LEC",
         "winner_rank": 5,
-        "winner_probability": 0.0533
+        "winner_probability": 0.0513
       },
       {
         "race": "2026 Belgium",
         "winner": "ANT",
         "winner_rank": 1,
-        "winner_probability": 0.2825
+        "winner_probability": 0.2925
       },
       {
         "race": "2026 Hungary",
         "winner": "NOR",
         "winner_rank": 1,
-        "winner_probability": 0.2881
+        "winner_probability": 0.3049
       },
       {
         "race": "2026 Dutch",
         "winner": "NOR",
         "winner_rank": 1,
-        "winner_probability": 0.3651
+        "winner_probability": 0.3837
       },
       {
         "race": "2026 Italian",
         "winner": "ANT",
         "winner_rank": 4,
-        "winner_probability": 0.0983
+        "winner_probability": 0.0953
       },
       {
         "race": "2026 Spain",
         "winner": "ANT",
         "winner_rank": 2,
-        "winner_probability": 0.2423
+        "winner_probability": 0.2483
       }
     ],
     "summary": {
-      "races_tested": 33,
-      "top1_accuracy": 0.4848,
-      "top3_accuracy": 0.9091,
+      "races_tested": 14,
+      "top1_accuracy": 0.5,
+      "top3_accuracy": 0.7857,
       "top5_accuracy": 1.0,
-      "mean_winner_rank": 2.0,
-      "log_loss": 0.1211,
-      "brier_score": 0.0352
+      "mean_winner_rank": 2.14,
+      "log_loss": 0.111,
+      "brier_score": 0.032
     }
   }
 }

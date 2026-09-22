@@ -490,6 +490,7 @@ def run_walk_forward_backtest(
     data: pd.DataFrame,
     model_weight: float,
     floor: float,
+    evaluation_start_year: int,
     min_training_races: int = 8,
 ) -> dict:
     race_keys = (
@@ -502,6 +503,8 @@ def run_walk_forward_backtest(
     probability_rows = []
 
     for race in race_keys:
+        if race["Year"] < evaluation_start_year:
+            continue
         prior_race_count = sum(item["RaceOrder"] < race["RaceOrder"] for item in race_keys)
         if prior_race_count < min_training_races:
             continue
@@ -553,7 +556,8 @@ def main() -> None:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     data = engineer_features(load_results())
     grid_positions, grid_metadata = load_grid_positions()
-    tuned_postprocess = tune_walk_forward_postprocess(data)
+    tuning_data = data[data["Year"] < 2026].copy()
+    tuned_postprocess = tune_walk_forward_postprocess(tuning_data)
     model_weight = tuned_postprocess["selected_config"]["model_weight"]
     floor = tuned_postprocess["selected_config"]["floor"]
     model = build_model()
@@ -563,10 +567,12 @@ def main() -> None:
     pred = build_prediction_rows(data, grid_positions)
     model_probs = model.predict_proba(pred[FEATURES])[:, 1]
     pred["probability"] = apply_probability_postprocess(pred, model_probs, model_weight, floor)
-    backtest = {
-        "races": tuned_postprocess["races"],
-        "summary": tuned_postprocess["summary"],
-    }
+    backtest = run_walk_forward_backtest(
+        data,
+        model_weight,
+        floor,
+        evaluation_start_year=2026,
+    )
 
     predictions = [
         {
@@ -596,6 +602,8 @@ def main() -> None:
                 "method": "walk_forward_grid_search",
                 "candidates_tested": tuned_postprocess["candidates_tested"],
                 "selection_metric": tuned_postprocess["selection_metric"],
+                "tuning_period": "through 2025",
+                "tuning_summary": tuned_postprocess["summary"],
             },
         },
         "prediction_input": grid_metadata,
