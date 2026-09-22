@@ -192,10 +192,28 @@ PROJECTED_GRID = {
 }
 
 
-def load_grid_positions() -> tuple[dict[str, int], dict]:
+def build_projected_grid(data: pd.DataFrame) -> dict[str, int]:
+    scores = []
+    for code, _, _ in DRIVER_ROSTER_2026:
+        history = data[data["Abbreviation"].eq(code)].sort_values("RaceOrder").tail(3)
+        average_grid = (
+            float(history["GridPosition"].mean())
+            if not history.empty
+            else float(PROJECTED_GRID[code])
+        )
+        scores.append((average_grid, PROJECTED_GRID[code], code))
+
+    return {
+        code: position
+        for position, (_, _, code) in enumerate(sorted(scores), start=1)
+    }
+
+
+def load_grid_positions(projected_grid: dict[str, int]) -> tuple[dict[str, int], dict]:
     if not GRID_OVERRIDE_PATH.exists():
-        return PROJECTED_GRID.copy(), {
+        return projected_grid.copy(), {
             "grid_source": "projected_grid",
+            "projection_method": "average_grid_position_last_3_races",
             "grid_override_file": None,
             "overridden_drivers": [],
         }
@@ -204,8 +222,8 @@ def load_grid_positions() -> tuple[dict[str, int], dict]:
     if not isinstance(raw_grid, dict):
         raise ValueError("qualifying_grid.json must be an object like {\"NOR\": 1, \"PIA\": 2}")
 
-    grid = PROJECTED_GRID.copy()
-    unknown_codes = sorted(set(raw_grid) - set(PROJECTED_GRID))
+    grid = projected_grid.copy()
+    unknown_codes = sorted(set(raw_grid) - set(projected_grid))
     if unknown_codes:
         raise ValueError(f"qualifying_grid.json contains unknown driver codes: {unknown_codes}")
 
@@ -605,7 +623,8 @@ def run_walk_forward_backtest(
 def main() -> None:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     data = engineer_features(load_results())
-    grid_positions, grid_metadata = load_grid_positions()
+    projected_grid = build_projected_grid(data)
+    grid_positions, grid_metadata = load_grid_positions(projected_grid)
     tuning_data = data[data["Year"] < 2026].copy()
     tuned_postprocess = tune_walk_forward_postprocess(tuning_data)
     model_weight = tuned_postprocess["selected_config"]["model_weight"]

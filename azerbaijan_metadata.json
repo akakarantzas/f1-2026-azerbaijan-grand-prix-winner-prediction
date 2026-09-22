@@ -2,7 +2,7 @@
   "race": "Azerbaijan GP",
   "circuit": "Baku City Circuit",
   "model_version": "azerbaijan-hgb-calibrated-1.1",
-  "generated_at": "2026-09-22T23:12:42.987389+00:00",
+  "generated_at": "2026-09-22T23:24:30.531432+00:00",
   "data_cutoff": {
     "year": 2026,
     "race": "Spain"
@@ -10,6 +10,11 @@
   "training_period": {
     "start": "2022 Azerbaijan",
     "end": "2026 Spain"
+  },
+  "driver_roster": {
+    "status": "confirmed",
+    "confirmed_at": "2026-09-22",
+    "source": "https://www.formula1.com/en/latest/article/hadjar-to-make-racing-return-with-red-bull-at-azerbaijan-gp.1ddPnUSDEze0V9MCiQ9d2U"
   },
   "training_samples": 1726,
   "training_races_loaded": 85,
@@ -32,7 +37,7 @@
     "races_tested": 14,
     "top1_accuracy": 0.5,
     "top3_accuracy": 0.8571,
-    "top5_accuracy": 1,
+    "top5_accuracy": 1.0,
     "mean_winner_rank": 1.93,
     "log_loss": 0.1042,
     "brier_score": 0.03
@@ -59,6 +64,7 @@
   },
   "prediction_input": {
     "grid_source": "projected_grid",
+    "projection_method": "average_grid_position_last_3_races",
     "grid_override_file": null,
     "overridden_drivers": []
   },
@@ -153,15 +159,10 @@
       "races_tested": 14,
       "top1_accuracy": 0.5,
       "top3_accuracy": 0.8571,
-      "top5_accuracy": 1,
+      "top5_accuracy": 1.0,
       "mean_winner_rank": 1.93,
       "log_loss": 0.1042,
       "brier_score": 0.03
     }
-  },
-  "driver_roster": {
-    "status": "confirmed",
-    "confirmed_at": "2026-09-22",
-    "source": "https://www.formula1.com/en/latest/article/hadjar-to-make-racing-return-with-red-bull-at-azerbaijan-gp.1ddPnUSDEze0V9MCiQ9d2U"
   }
 }

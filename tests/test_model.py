@@ -9,6 +9,7 @@ from train_azerbaijan import (
     PROJECTED_GRID,
     build_model,
     build_prediction_rows,
+    build_projected_grid,
     engineer_features,
 )
 
@@ -71,6 +72,22 @@ class FeatureEngineeringTests(unittest.TestCase):
             train_races = set(groups.iloc[train_index])
             test_races = set(groups.iloc[test_index])
             self.assertTrue(train_races.isdisjoint(test_races))
+
+    def test_projected_grid_uses_recent_qualifying_form(self):
+        data = pd.DataFrame(
+            [
+                result_row(0, "NOR", "McLaren", 10, 10, 5),
+                result_row(1, "NOR", "McLaren", 10, 1, 5),
+                result_row(2, "NOR", "McLaren", 10, 1, 5),
+                result_row(0, "PIA", "McLaren", 10, 2, 5),
+                result_row(1, "PIA", "McLaren", 10, 2, 5),
+                result_row(2, "PIA", "McLaren", 10, 2, 5),
+            ]
+        )
+
+        projected = build_projected_grid(data)
+
+        self.assertLess(projected["PIA"], projected["NOR"])
 
 
 class ArtifactTests(unittest.TestCase):
