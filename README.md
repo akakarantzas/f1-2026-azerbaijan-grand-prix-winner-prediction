@@ -38,6 +38,12 @@ To rebuild the image and retrain from a clean container:
 docker compose run --rm --build train
 ```
 
+Run the feature and artifact regression tests in the same environment:
+
+```bash
+docker compose run --rm --build train python -m unittest discover -s tests -v
+```
+
 ## Qualifying Grid
 
 Before qualifying, the script uses its projected grid. After qualifying, copy `qualifying_grid.example.json` to `qualifying_grid.json`, update the positions, and rerun the script.
