@@ -286,11 +286,14 @@ def build_model() -> Pipeline:
 
 
 def build_prediction_rows(data: pd.DataFrame, grid_positions: dict[str, int]) -> pd.DataFrame:
-    latest = data.sort_values("RaceOrder").groupby("Abbreviation").tail(1).set_index("Abbreviation")
     rows = []
 
     for code, driver, team in DRIVER_ROSTER_2026:
-        history = latest.loc[code] if code in latest.index else None
+        history = data[data["Abbreviation"].eq(code)].sort_values("RaceOrder")
+        recent_five = history.tail(5)
+        recent_ten = history.tail(10)
+        azerbaijan_history = history[history["GrandPrix"].eq("Azerbaijan")]
+        latest = history.iloc[-1] if not history.empty else None
         rows.append(
             {
                 "Abbreviation": code,
@@ -298,13 +301,13 @@ def build_prediction_rows(data: pd.DataFrame, grid_positions: dict[str, int]) ->
                 "TeamName": team,
                 "GridPosition": grid_positions[code],
                 "DriverCode": code,
-                "AvgPoints5": float(history["AvgPoints5"]) if history is not None else 0.0,
-                "AvgGrid5": float(history["AvgGrid5"]) if history is not None else grid_positions[code],
-                "AvgFinish5": float(history["AvgFinish5"]) if history is not None else 14.0,
-                "WinRate10": float(history["WinRate10"]) if history is not None else 0.0,
-                "TeamAvgPoints5": float(history["TeamAvgPoints5"]) if history is not None else 0.0,
-                "AzerbaijanExperience": float(history["AzerbaijanExperience"]) if history is not None else 0.0,
-                "AzerbaijanWinRate": float(history["AzerbaijanWinRate"]) if history is not None else 0.0,
+                "AvgPoints5": float(recent_five["Points"].mean()) if not history.empty else 0.0,
+                "AvgGrid5": float(recent_five["GridPosition"].mean()) if not history.empty else grid_positions[code],
+                "AvgFinish5": float(recent_five["Position"].mean()) if not history.empty else 14.0,
+                "WinRate10": float(recent_ten["Winner"].mean()) if not history.empty else 0.0,
+                "TeamAvgPoints5": float(latest["TeamAvgPoints5"]) if latest is not None else 0.0,
+                "AzerbaijanExperience": float(len(azerbaijan_history)),
+                "AzerbaijanWinRate": float(azerbaijan_history["Winner"].mean()) if not azerbaijan_history.empty else 0.0,
                 "IsStreetCircuit": 1,
             }
         )
