@@ -22,6 +22,8 @@ pip install -r requirements.txt
 python train_azerbaijan.py
 ```
 
+Use `requirements.lock.txt` when you need the exact dependency set used by the Docker image.
+
 FastF1 downloads race data into the local `cache/` directory.
 
 ## Run with Docker

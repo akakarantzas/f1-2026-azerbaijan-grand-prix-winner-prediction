@@ -6,8 +6,8 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 
 WORKDIR /app
 
-COPY requirements.txt .
-RUN pip install --no-cache-dir --disable-pip-version-check -r requirements.txt
+COPY requirements.lock.txt .
+RUN pip install --no-cache-dir --disable-pip-version-check -r requirements.lock.txt
 
 COPY train_azerbaijan.py qualifying_grid.example.json azerbaijan_predictions.json ./
 COPY tests ./tests
