@@ -2,8 +2,8 @@
   "race": "Azerbaijan GP",
   "circuit": "Baku City Circuit",
   "model_version": "azerbaijan-hgb-calibrated-1.0",
-  "training_samples": 847,
-  "training_races_loaded": 41,
+  "training_samples": 1726,
+  "training_races_loaded": 85,
   "features": [
     "GridPosition",
     "DriverCode",
@@ -24,13 +24,13 @@
     "top1_accuracy": 0.5,
     "top3_accuracy": 0.8571,
     "top5_accuracy": 1.0,
-    "mean_winner_rank": 2.0,
-    "log_loss": 0.1118,
-    "brier_score": 0.0323
+    "mean_winner_rank": 1.93,
+    "log_loss": 0.1042,
+    "brier_score": 0.03
   },
   "prediction_postprocess": {
-    "model_weight": 0.6,
-    "form_prior_weight": 0.4,
+    "model_weight": 0.8,
+    "form_prior_weight": 0.2,
     "floor_before_normalization": 0.0005,
     "selection": {
       "method": "walk_forward_grid_search",
@@ -38,13 +38,13 @@
       "selection_metric": "top1_accuracy, then mean_winner_rank, log_loss, brier_score",
       "tuning_period": "through 2025",
       "tuning_summary": {
-        "races_tested": 19,
-        "top1_accuracy": 0.4211,
-        "top3_accuracy": 0.9474,
-        "top5_accuracy": 1.0,
+        "races_tested": 63,
+        "top1_accuracy": 0.5873,
+        "top3_accuracy": 0.873,
+        "top5_accuracy": 0.9683,
         "mean_winner_rank": 1.95,
-        "log_loss": 0.1273,
-        "brier_score": 0.0374
+        "log_loss": 0.1082,
+        "brier_score": 0.0304
       }
     }
   },
@@ -59,85 +59,85 @@
         "race": "2026 Australia",
         "winner": "RUS",
         "winner_rank": 1,
-        "winner_probability": 0.2474
+        "winner_probability": 0.3943
       },
       {
         "race": "2026 China",
         "winner": "ANT",
         "winner_rank": 2,
-        "winner_probability": 0.1082
+        "winner_probability": 0.2376
       },
       {
         "race": "2026 Japan",
         "winner": "ANT",
         "winner_rank": 1,
-        "winner_probability": 0.2493
+        "winner_probability": 0.4388
       },
       {
         "race": "2026 Miami",
         "winner": "ANT",
         "winner_rank": 1,
-        "winner_probability": 0.3794
+        "winner_probability": 0.4327
       },
       {
         "race": "2026 Canada",
         "winner": "ANT",
         "winner_rank": 2,
-        "winner_probability": 0.209
+        "winner_probability": 0.2235
       },
       {
         "race": "2026 Monaco",
         "winner": "ANT",
         "winner_rank": 1,
-        "winner_probability": 0.3952
+        "winner_probability": 0.4828
       },
       {
         "race": "2026 Barcelona-Catalunya",
         "winner": "HAM",
         "winner_rank": 3,
-        "winner_probability": 0.12
+        "winner_probability": 0.056
       },
       {
         "race": "2026 Austria",
         "winner": "RUS",
-        "winner_rank": 3,
-        "winner_probability": 0.1628
+        "winner_rank": 1,
+        "winner_probability": 0.311
       },
       {
         "race": "2026 British",
         "winner": "LEC",
         "winner_rank": 5,
-        "winner_probability": 0.0507
+        "winner_probability": 0.043
       },
       {
         "race": "2026 Belgium",
         "winner": "ANT",
-        "winner_rank": 1,
-        "winner_probability": 0.2674
+        "winner_rank": 2,
+        "winner_probability": 0.2389
       },
       {
         "race": "2026 Hungary",
         "winner": "NOR",
-        "winner_rank": 1,
-        "winner_probability": 0.3055
+        "winner_rank": 2,
+        "winner_probability": 0.1795
       },
       {
         "race": "2026 Dutch",
         "winner": "NOR",
         "winner_rank": 1,
-        "winner_probability": 0.3348
+        "winner_probability": 0.3926
       },
       {
         "race": "2026 Italian",
         "winner": "ANT",
         "winner_rank": 4,
-        "winner_probability": 0.0856
+        "winner_probability": 0.0904
       },
       {
         "race": "2026 Spain",
         "winner": "ANT",
-        "winner_rank": 2,
-        "winner_probability": 0.2732
+        "winner_rank": 1,
+        "winner_probability": 0.377
       }
     ],
     "summary": {
@@ -145,9 +145,9 @@
       "top1_accuracy": 0.5,
       "top3_accuracy": 0.8571,
       "top5_accuracy": 1.0,
-      "mean_winner_rank": 2.0,
-      "log_loss": 0.1118,
-      "brier_score": 0.0323
+      "mean_winner_rank": 1.93,
+      "log_loss": 0.1042,
+      "brier_score": 0.03
     }
   }
 }
